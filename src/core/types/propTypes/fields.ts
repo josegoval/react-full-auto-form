@@ -51,15 +51,15 @@ export type NumberInputProps = CommonFieldProps & {
   step?: number
 }
 
-type imageFileTypes = 'image/*' | 'image/png' | 'image/jpg'
-type documentsFileTypes = 'pdf'
-type fileTypes = documentsFileTypes | imageFileTypes
+type ImageFileTypes = 'image/*' | 'image/png' | 'image/jpg'
+type DocumentsFileTypes = 'pdf'
+type FileTypes = DocumentsFileTypes | ImageFileTypes
 export type FileInputProps = CommonFieldProps & {
   type: 'file'
   canSelectMultipleFiles?: boolean
   minFiles?: number
   maxFiles?: number
-  allowedFiles: '*' | fileTypes | fileTypes[]
+  allowedFiles: '*' | FileTypes | FileTypes[]
 }
 
 export type CheckboxInputProps = CommonFieldProps & {
