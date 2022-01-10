@@ -26,6 +26,14 @@ type OnResetFunction = ({
 type OnSuccessFunction = (response: any) => void
 type OnErrorFunction = (response: any, error: Error) => void
 
+type ButtonConfiguration = {
+  text: string
+  color: string
+  className: string
+  style: React.CSSProperties
+}
+type ButtonOptions = React.FC | React.Component | ButtonConfiguration
+
 // TODO: set param and return types
 // new format to send to submit
 type FormatterFunction = (values: any) => any
@@ -42,6 +50,9 @@ type ReactFullAutoFormProps = {
   hideResetButton?: boolean
   hideCancelButton?: boolean
   hideSubmitButton?: boolean
+  submitButton?: ButtonOptions
+  cancelButton?: ButtonOptions
+  resetButton?: ButtonOptions
   successMessages?: SuccessMessages
   errorMessages?: ErrorMessages
   formatter?: FormatterFunction
@@ -49,8 +60,26 @@ type ReactFullAutoFormProps = {
   axios?: Axios // customAxios
 }
 
-export default function ReactFullAutoForm(
-  props: ReactFullAutoFormProps
-): ReactElement {
+export default function ReactFullAutoForm({
+  fields,
+  method,
+  url,
+  onSubmit,
+  onCancel,
+  onReset,
+  onSuccess,
+  onError,
+  hideResetButton,
+  hideCancelButton,
+  hideSubmitButton,
+  submitButton,
+  cancelButton,
+  resetButton,
+  successMessages,
+  errorMessages,
+  formatter,
+  submitFormat,
+  axios
+}: ReactFullAutoFormProps): ReactElement {
   return <div />
 }
