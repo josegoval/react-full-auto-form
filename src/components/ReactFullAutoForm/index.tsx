@@ -5,42 +5,22 @@ import {
   SuccessMessages
 } from '../../core/types/propTypes/messages'
 import { Axios } from 'axios'
-
-// TODO: set axios types for responses
-type OnSubmitFunction = ({
-  values,
-  e
-}: {
-  values: any
-  e: React.FormEvent
-}) => void
-type OnCancelFunction = (e: React.MouseEvent<HTMLButtonElement>) => void
-type OnResetFunction = ({
-  values,
-  e
-}: {
-  values: any
-  e: React.MouseEvent<HTMLButtonElement>
-}) => void
-
-type OnSuccessFunction = (response: any) => void
-type OnErrorFunction = (response: any, error: Error) => void
-
-type ButtonConfiguration = {
-  text: string
-  color: string
-  className: string
-  style: React.CSSProperties
-}
-type ButtonOptions = React.FC | React.Component | ButtonConfiguration
-
-// TODO: set param and return types
-// new format to send to submit
-type FormatterFunction = (values: any) => any
+import Inputs from './components/Inputs'
+import {
+  ButtonOptions,
+  FormatterFunction,
+  OnCancelFunction,
+  OnErrorFunction,
+  OnResetFunction,
+  OnSubmitFunction,
+  OnSuccessFunction,
+  SubmitFormat
+} from '../../core/types/propTypes/reactFullAutoForm'
+import { HttpMethod } from '../../core/types/shared/http'
 
 type ReactFullAutoFormProps = {
   fields: Fields
-  method?: 'POST' | 'PUT' | 'PATCH'
+  method?: HttpMethod
   url?: string
   onSubmit?: OnSubmitFunction
   onCancel?: OnCancelFunction
@@ -56,7 +36,7 @@ type ReactFullAutoFormProps = {
   successMessages?: SuccessMessages
   errorMessages?: ErrorMessages
   formatter?: FormatterFunction
-  submitFormat?: 'JSON' | 'multipart/form-data'
+  submitFormat?: SubmitFormat
   axios?: Axios // customAxios
 }
 
@@ -81,5 +61,9 @@ export default function ReactFullAutoForm({
   submitFormat,
   axios
 }: ReactFullAutoFormProps): ReactElement {
-  return <div />
+  return (
+    <form>
+      <Inputs fields={fields} />
+    </form>
+  )
 }
