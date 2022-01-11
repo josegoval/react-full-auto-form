@@ -5,6 +5,7 @@ import {
   SuccessMessages
 } from '../../core/types/propTypes/messages'
 import { Axios } from 'axios'
+import Inputs from './components/Inputs'
 
 // TODO: set axios types for responses
 type OnSubmitFunction = ({
@@ -81,5 +82,9 @@ export default function ReactFullAutoForm({
   submitFormat,
   axios
 }: ReactFullAutoFormProps): ReactElement {
-  return <div />
+  return (
+    <form>
+      <Inputs fields={fields} />
+    </form>
+  )
 }
