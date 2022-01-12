@@ -1,18 +1,14 @@
 import React, { ReactElement } from 'react'
 import { Fields } from '../../../../core/types/propTypes/fields'
 import {
-  FieldState,
+  FormState,
   HandleChangeFormStateFunction
 } from '../../../../core/types/propTypes/reactFullAutoForm'
 import TextField from './components/TextField'
 
-type FormState = {
-  [key: string]: FieldState<string>
-}
-
 type FormFieldsProps = {
   fields: Fields
-  formState: FormState // TODO type
+  formState: FormState
   onChangeFormState: HandleChangeFormStateFunction
 }
 

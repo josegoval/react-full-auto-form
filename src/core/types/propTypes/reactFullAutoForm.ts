@@ -34,15 +34,19 @@ export type FormatterFunction = (values: any) => any
 
 export type SubmitFormat = 'JSON' | 'multipart/form-data'
 
-export type FieldState<T> = {
-  value: T
+export type FieldStateValue = string | number
+
+export type FieldState = {
+  value: FieldStateValue
   error: string | Falsy
   isBlurred: boolean | Falsy
 }
 
-// type AllPossibleFieldState
+export type FormState = {
+  [name: string]: FieldState
+}
 
-export type HandleChangeFormStateFunction = <T>(
+export type HandleChangeFormStateFunction = (
   name: string,
-  nextFieldState: FieldState<T>
+  nextFieldState: FieldState
 ) => void

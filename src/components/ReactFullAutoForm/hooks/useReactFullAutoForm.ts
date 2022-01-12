@@ -8,6 +8,7 @@ import {
 } from '../../../core/types/propTypes/messages'
 import {
   FormatterFunction,
+  FormState,
   HandleChangeFormStateFunction,
   OnCancelFunction,
   OnErrorFunction,
@@ -26,7 +27,7 @@ const getTypeDefaultValue = (type: InputType) => {
 }
 
 // TODO: type return
-const parseFieldsIntoFormState = (fields: Fields) =>
+const parseFieldsIntoFormState = (fields: Fields): FormState =>
   fields.reduce(
     (acc, { name, type }) => ({
       ...acc,
@@ -65,7 +66,9 @@ const useReactFullAutoForm = ({
 // submitFormat,
 // axios
 UseReactAutoFormParams) => {
-  const [formState, setFormState] = useState(parseFieldsIntoFormState(fields))
+  const [formState, setFormState] = useState<FormState>(
+    parseFieldsIntoFormState(fields)
+  )
 
   const handleChangeFormState: HandleChangeFormStateFunction = (
     name,
@@ -75,6 +78,12 @@ UseReactAutoFormParams) => {
       ...prevState,
       [name]: nextFieldState
     }))
+
+  // const handleChangeFieldStateBlur = (name: string, isBlurred: boolean) =>
+  //   setFormState((prevState) => ({
+  //     ...prevState,
+  //     [name]: { ...prevState[name], isBlurred }
+  //   }))
 
   // const handleSubmit: OnSubmitFunction = ({ values, e }) => {
   //   // TODO

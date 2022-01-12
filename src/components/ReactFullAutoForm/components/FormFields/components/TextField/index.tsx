@@ -7,13 +7,14 @@ import {
 import DefaultField from '../shared/DefaultField'
 
 type Props = TextFieldProps & {
-  state: FieldState<string>
+  state: FieldState
   onChangeFormState: HandleChangeFormStateFunction
 }
 
 export default function TextField(props: Props): ReactElement {
+  // TODO: validateTextInput
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    props.onChangeFormState<string>(props.name, {
+    props.onChangeFormState(props.name, {
       value: e.target.value,
       error: '',
       isBlurred: false
