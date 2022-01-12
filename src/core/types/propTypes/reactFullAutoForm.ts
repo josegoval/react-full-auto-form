@@ -1,3 +1,5 @@
+import { Falsy } from '../shared/common'
+
 // TODO: set axios types for responses
 export type OnSubmitFunction = ({
   values,
@@ -31,3 +33,16 @@ export type ButtonOptions = React.FC | React.Component | ButtonConfiguration
 export type FormatterFunction = (values: any) => any
 
 export type SubmitFormat = 'JSON' | 'multipart/form-data'
+
+export type FieldState<T> = {
+  value: T
+  error: string | Falsy
+  isBlurred: boolean | Falsy
+}
+
+// type AllPossibleFieldState
+
+export type HandleChangeFormStateFunction = <T>(
+  name: string,
+  nextFieldState: FieldState<T>
+) => void

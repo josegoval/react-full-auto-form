@@ -8,6 +8,7 @@ import {
 } from '../../../core/types/propTypes/messages'
 import {
   FormatterFunction,
+  HandleChangeFormStateFunction,
   OnCancelFunction,
   OnErrorFunction,
   OnResetFunction,
@@ -15,16 +16,7 @@ import {
   OnSuccessFunction,
   SubmitFormat
 } from '../../../core/types/propTypes/reactFullAutoForm'
-import { Falsy } from '../../../core/types/shared/common'
 import { HttpMethod } from '../../../core/types/shared/http'
-
-type SingleFormState<T> = {
-  value: T
-  error: string | Falsy
-  isBlurred: boolean | Falsy
-}
-
-// type AllPossibleSingleFormState
 
 const getTypeDefaultValue = (type: InputType) => {
   if (type === 'text' || type === 'password') {
@@ -75,8 +67,14 @@ const useReactFullAutoForm = ({
 }: UseReactAutoFormParams) => {
   const [formState, setFormState] = useState(parseFieldsIntoFormState(fields))
 
-  const handleChangeFormState = <T>(name: string, value: SingleFormState<T>) =>
-    setFormState((prevState) => ({ ...prevState, [name]: value }))
+  const handleChangeFormState: HandleChangeFormStateFunction = (
+    name,
+    nextFieldState
+  ) =>
+    setFormState((prevState) => ({
+      ...prevState,
+      [name]: nextFieldState
+    }))
 
   const handleSubmit: OnSubmitFunction = ({ values, e }) => {
     // TODO

@@ -5,7 +5,7 @@ import {
   SuccessMessages
 } from '../../core/types/propTypes/messages'
 import { Axios } from 'axios'
-import Inputs from './components/Inputs'
+import FormFields from './components/FormFields'
 import {
   ButtonOptions,
   FormatterFunction,
@@ -17,6 +17,7 @@ import {
   SubmitFormat
 } from '../../core/types/propTypes/reactFullAutoForm'
 import { HttpMethod } from '../../core/types/shared/http'
+import useReactFullAutoForm from './hooks/useReactFullAutoForm'
 
 type ReactFullAutoFormProps = {
   fields: Fields
@@ -40,30 +41,26 @@ type ReactFullAutoFormProps = {
   axios?: Axios // customAxios
 }
 
-export default function ReactFullAutoForm({
-  fields,
-  method,
-  url,
-  onSubmit,
-  onCancel,
-  onReset,
-  onSuccess,
-  onError,
-  hideResetButton,
-  hideCancelButton,
-  hideSubmitButton,
-  submitButton,
-  cancelButton,
-  resetButton,
-  successMessages,
-  errorMessages,
-  formatter,
-  submitFormat,
-  axios
-}: ReactFullAutoFormProps): ReactElement {
+export default function ReactFullAutoForm(
+  props: ReactFullAutoFormProps
+): ReactElement {
+  const { fields } = props
+
+  const {
+    formState,
+    handleChangeFormState,
+    handleReset,
+    handleCancel,
+    handleSubmit
+  } = useReactFullAutoForm(props)
+
   return (
     <form>
-      <Inputs fields={fields} />
+      <FormFields
+        fields={fields}
+        formState={formState}
+        onChangeFormState={handleChangeFormState}
+      />
     </form>
   )
 }

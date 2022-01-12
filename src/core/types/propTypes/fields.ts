@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, CSSProperties, FC } from 'react'
+import { ChangeEvent, ComponentClass, CSSProperties, FC } from 'react'
 
 type CallbackHookFunction = ({
   nextValue,
@@ -26,25 +26,25 @@ export type CommonFieldProps = {
   style?: CSSProperties
   beforeChange?: CallbackHookFunction
   afterChange?: CallbackHookFunction
-  component?: FC | Component
+  component?: FC
   validate?: Validation
   pattern?: Pattern
   isRequired: boolean
 }
 
-export type TextInputProps = CommonFieldProps & {
+export type TextFieldProps = CommonFieldProps & {
   type: 'text'
   minLenght?: number
   maxLenght?: number
 }
 
-export type EmailInputProps = CommonFieldProps & {
+export type EmailFieldProps = CommonFieldProps & {
   type: 'email'
   minLenght?: number
   maxLenght?: number
 }
 
-export type NumberInputProps = CommonFieldProps & {
+export type NumberFieldProps = CommonFieldProps & {
   type: 'number'
   min?: number
   max?: number
@@ -54,7 +54,7 @@ export type NumberInputProps = CommonFieldProps & {
 type ImageFileTypes = 'image/*' | 'image/png' | 'image/jpg'
 type DocumentsFileTypes = 'pdf'
 type FileTypes = DocumentsFileTypes | ImageFileTypes
-export type FileInputProps = CommonFieldProps & {
+export type FileFieldProps = CommonFieldProps & {
   type: 'file'
   canSelectMultipleFiles?: boolean
   minFiles?: number
@@ -62,33 +62,33 @@ export type FileInputProps = CommonFieldProps & {
   allowedFiles: '*' | FileTypes | FileTypes[]
 }
 
-export type CheckboxInputProps = CommonFieldProps & {
+export type CheckboxFieldProps = CommonFieldProps & {
   type: 'checkbox'
 }
 
-export type DateInputProps = CommonFieldProps & {
+export type DateFieldProps = CommonFieldProps & {
   type: 'date'
   minDate: Date
   maxDate: Date
 }
 
-export type DatetimeInputProps = CommonFieldProps & {
+export type DatetimeFieldProps = CommonFieldProps & {
   type: 'datetime'
   minDate: Date
   maxDate: Date
 }
 
-export type PasswordInputProps = CommonFieldProps & {
+export type PasswordFieldProps = CommonFieldProps & {
   type: 'password'
   minLenght?: number
   maxLenght?: number
 }
 
-export type TelInputProps = CommonFieldProps & {
+export type TelFieldProps = CommonFieldProps & {
   type: 'tel'
 }
 
-export type UrlInputProps = CommonFieldProps & {
+export type UrlFieldProps = CommonFieldProps & {
   type: 'url'
 }
 
@@ -99,14 +99,14 @@ export type UrlInputProps = CommonFieldProps & {
 // TODO: radio
 
 export type Fields = Array<
-  | TextInputProps
-  //   | EmailInputProps
-  //   | NumberInputProps
-  //   | FileInputProps
-  //   | CheckboxInputProps
-  //   | DateInputProps
-  //   | DatetimeInputProps
-  | PasswordInputProps
-  //   | TelInputProps
-  //   | UrlInputProps
+  | TextFieldProps
+  //   | EmailFieldProps
+  //   | NumberFieldProps
+  //   | FileFieldProps
+  //   | CheckboxFieldProps
+  //   | DateFieldProps
+  //   | DatetimeFieldProps
+  | PasswordFieldProps
+  //   | TelFieldProps
+  //   | UrlFieldProps
 >
