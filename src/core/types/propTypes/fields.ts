@@ -26,7 +26,7 @@ export type CommonFieldProps = {
   style?: CSSProperties
   beforeChange?: CallbackHookFunction
   afterChange?: CallbackHookFunction
-  component?: FC
+  component?: FC<any> // TODO: allow classes
   validate?: Validation
   pattern?: Pattern
   isRequired: boolean

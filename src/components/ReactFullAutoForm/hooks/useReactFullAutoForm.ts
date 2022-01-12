@@ -52,19 +52,19 @@ type UseReactAutoFormParams = {
 }
 
 const useReactFullAutoForm = ({
-  fields,
-  method,
-  url,
-  onSubmit,
-  onCancel,
-  onReset,
-  onSuccess,
-  onError,
-  successMessages,
-  formatter,
-  submitFormat,
-  axios
-}: UseReactAutoFormParams) => {
+  fields
+}: // method,
+// url,
+// onSubmit,
+// onCancel,
+// onReset,
+// onSuccess,
+// onError,
+// successMessages,
+// formatter,
+// submitFormat,
+// axios
+UseReactAutoFormParams) => {
   const [formState, setFormState] = useState(parseFieldsIntoFormState(fields))
 
   const handleChangeFormState: HandleChangeFormStateFunction = (
@@ -76,22 +76,22 @@ const useReactFullAutoForm = ({
       [name]: nextFieldState
     }))
 
-  const handleSubmit: OnSubmitFunction = ({ values, e }) => {
-    // TODO
-  }
-  const handleCancel: OnCancelFunction = (e) => {
-    // TODO
-  }
-  const handleReset: OnResetFunction = ({ values, e }) => {
-    // TODO
-  }
+  // const handleSubmit: OnSubmitFunction = ({ values, e }) => {
+  //   // TODO
+  // }
+  // const handleCancel: OnCancelFunction = (e) => {
+  //   // TODO
+  // }
+  // const handleReset: OnResetFunction = ({ values, e }) => {
+  //   // TODO
+  // }
 
   return {
     formState,
-    handleChangeFormState,
-    handleSubmit,
-    handleCancel,
-    handleReset
+    handleChangeFormState
+    // handleSubmit,
+    // handleCancel,
+    // handleReset
   }
 }
 

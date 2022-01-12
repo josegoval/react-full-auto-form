@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { ReactElement } from 'react'
 import { Fields } from '../../core/types/propTypes/fields'
 import {
@@ -48,10 +49,10 @@ export default function ReactFullAutoForm(
 
   const {
     formState,
-    handleChangeFormState,
-    handleReset,
-    handleCancel,
-    handleSubmit
+    handleChangeFormState
+    // handleReset,
+    // handleCancel,
+    // handleSubmit
   } = useReactFullAutoForm(props)
 
   return (
