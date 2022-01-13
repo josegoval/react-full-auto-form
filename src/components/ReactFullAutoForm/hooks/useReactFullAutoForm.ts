@@ -26,7 +26,6 @@ const getTypeDefaultValue = (type: InputType) => {
   return null
 }
 
-// TODO: type return
 const parseFieldsIntoFormState = (fields: Fields): FormState =>
   fields.reduce(
     (acc, { name, type }) => ({
@@ -76,7 +75,10 @@ UseReactAutoFormParams) => {
   ) =>
     setFormState((prevState) => ({
       ...prevState,
-      [name]: nextFieldState
+      [name]:
+        typeof nextFieldState === 'function'
+          ? nextFieldState(prevState)
+          : nextFieldState
     }))
 
   // const handleChangeFieldStateBlur = (name: string, isBlurred: boolean) =>

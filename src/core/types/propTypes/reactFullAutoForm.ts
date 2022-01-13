@@ -48,5 +48,5 @@ export type FormState = {
 
 export type HandleChangeFormStateFunction = (
   name: string,
-  nextFieldState: FieldState
+  nextFieldState: FieldState | ((prevState: FormState) => FieldState)
 ) => void
