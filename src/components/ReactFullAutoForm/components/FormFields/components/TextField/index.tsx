@@ -13,12 +13,13 @@ type Props = TextFieldProps & {
 
 export default function TextField(props: Props): ReactElement {
   // TODO: validateTextInput
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     props.onChangeFormState(props.name, {
       value: e.target.value,
       error: '',
       isBlurred: false
     })
+  }
 
   const handleEnableIsBlurred = () =>
     props.onChangeFormState(props.name, (prevState) => ({
