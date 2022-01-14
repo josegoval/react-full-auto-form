@@ -1,5 +1,7 @@
 import { TextFieldComponent } from '../../types/propTypes/components'
 import { Falsy } from '../../types/shared/common'
+import { fillObjectWithDefaults } from '../../utils/defaults'
+import { defaultComponentConfigurations } from './defaultConstructor'
 
 type ClampErrorFunction = (
   requiredLength: number,
@@ -14,27 +16,30 @@ export type DefaultTextField = {
   }
 }
 
-type ReactFullAutoFormInstanceConstructor = {
-  componentConfigurations: {
-    DefaultTextField?: DefaultTextField
-  }
+export type ComponentConfigurations = {
+  defaultTextField?: DefaultTextField
 }
 
-class ReactFullAutoFormInstance {
-  private _componentConfigurations
+type ReactFullAutoFormInstanceConstructor = {
+  componentConfigurations?: ComponentConfigurations
+}
 
-  constructor({ DefaultTextField }: ReactFullAutoFormInstanceConstructor = {}) {
-    this.componentConfigurations = {
-      DefaultTextField
-    }
+export class ReactFullAutoFormInstance {
+  private _componentConfigurations: ComponentConfigurations
+
+  constructor({
+    componentConfigurations = {}
+  }: ReactFullAutoFormInstanceConstructor = {}) {
+    this.componentConfigurations = fillObjectWithDefaults(
+      defaultComponentConfigurations,
+      componentConfigurations
+    )
   }
 
   public get componentConfigurations() {
     return this._componentConfigurations
   }
   public set componentConfigurations(value) {
-    this._components = value
+    this._componentConfigurations = value
   }
 }
-
-export const globalReactFullAutoFormInstance = new ReactFullAutoFormInstance()
