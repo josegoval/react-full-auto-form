@@ -1,6 +1,6 @@
 import { TextFieldComponent } from '../../types/propTypes/components'
 import { Falsy } from '../../types/shared/common'
-import { fillObjectWithDefaults } from '../../utils/defaults'
+import { defaultsDeep } from 'lodash'
 import { defaultComponentConfigurations } from './defaultConstructor'
 
 type ClampErrorFunction = (
@@ -30,9 +30,9 @@ export class ReactFullAutoFormInstance {
   constructor({
     componentConfigurations = {}
   }: ReactFullAutoFormInstanceConstructor = {}) {
-    this.componentConfigurations = fillObjectWithDefaults(
-      defaultComponentConfigurations,
-      componentConfigurations
+    this.componentConfigurations = defaultsDeep(
+      componentConfigurations,
+      defaultComponentConfigurations
     )
   }
 
