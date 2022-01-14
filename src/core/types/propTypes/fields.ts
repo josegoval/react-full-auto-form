@@ -17,7 +17,12 @@ type Validation = ValidateFunction | ValidateFunction[]
 type PatternValidation = { regex: RegExp; errorMessage: string }
 type Pattern = PatternValidation | PatternValidation[]
 
-export type CommonFieldProps = {
+export type CommonFieldValidations = {
+  validate?: Validation
+  pattern?: Pattern
+}
+
+export type CommonFieldProps = CommonFieldValidations & {
   label: string
   name: string
   submitKey?: string // takes name by default
@@ -27,16 +32,18 @@ export type CommonFieldProps = {
   beforeChange?: CallbackHookFunction
   afterChange?: CallbackHookFunction
   component?: FC<any> // TODO: allow classes
-  validate?: Validation
-  pattern?: Pattern
   isRequired: boolean
 }
 
-export type TextFieldProps = CommonFieldProps & {
-  type: 'text'
+export type TextFieldValidations = CommonFieldValidations & {
   minLenght?: number
   maxLenght?: number
 }
+
+export type TextFieldProps = CommonFieldProps &
+  TextFieldValidations & {
+    type: 'text'
+  }
 
 export type EmailFieldProps = CommonFieldProps & {
   type: 'email'

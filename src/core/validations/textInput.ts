@@ -1,8 +1,8 @@
-import { TextFieldProps } from '../types/propTypes/fields'
+import { TextFieldValidations } from '../types/propTypes/fields'
 import { Falsy } from '../types/shared/common'
 
 export const validateTextInput = (
-  { maxLenght, minLenght, pattern, validate }: TextFieldProps,
+  { maxLenght, minLenght, pattern, validate }: TextFieldValidations,
   nextValue: string
 ): string | Falsy | void => {
   if (nextValue.length < Number(minLenght)) {
