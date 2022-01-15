@@ -10,12 +10,11 @@ type CallbackHookFunction = ({
   e: ChangeEvent<HTMLInputElement>
 }) => void
 
-// TODO: check ture | false return
-type ValidateFunction = (value: any) => string | boolean | null | undefined
-type Validation = ValidateFunction | ValidateFunction[]
+type ValidateFunction = (value: any) => string
+export type Validation = ValidateFunction | ValidateFunction[]
 
 type PatternValidation = { regex: RegExp; errorMessage: string }
-type Pattern = PatternValidation | PatternValidation[]
+export type Pattern = PatternValidation | PatternValidation[]
 
 export type CommonFieldValidations = {
   validate?: Validation
@@ -36,8 +35,8 @@ export type CommonFieldProps = CommonFieldValidations & {
 }
 
 export type TextFieldValidations = CommonFieldValidations & {
-  minLenght?: number
-  maxLenght?: number
+  minLength?: number
+  maxLength?: number
 }
 
 export type TextFieldProps = CommonFieldProps &
@@ -47,8 +46,8 @@ export type TextFieldProps = CommonFieldProps &
 
 export type EmailFieldProps = CommonFieldProps & {
   type: 'email'
-  minLenght?: number
-  maxLenght?: number
+  minLength?: number
+  maxLength?: number
 }
 
 export type NumberFieldProps = CommonFieldProps & {
@@ -87,8 +86,8 @@ export type DatetimeFieldProps = CommonFieldProps & {
 
 export type PasswordFieldProps = CommonFieldProps & {
   type: 'password'
-  minLenght?: number
-  maxLenght?: number
+  minLength?: number
+  maxLength?: number
 }
 
 export type TelFieldProps = CommonFieldProps & {

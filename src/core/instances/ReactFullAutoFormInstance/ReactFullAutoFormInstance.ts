@@ -8,20 +8,30 @@ type ClampErrorFunction = (
   label: string
 ) => string | Falsy
 
-export type DefaultTextField = {
-  component?: TextFieldComponent
-  errorMessages?: {
-    minLength?: string | ClampErrorFunction
-    maxLength?: string | ClampErrorFunction
-  }
+export type DefaultTextFieldErrorMessages = {
+  minLength: string | ClampErrorFunction
+  maxLength: string | ClampErrorFunction
 }
+
+export type PartialDefaultTextFieldErrorMessages = Partial<DefaultTextField>
+
+export type DefaultTextField = {
+  component: TextFieldComponent
+  errorMessages: DefaultTextFieldErrorMessages
+}
+
+export type PartialDefaultTextField = Partial<DefaultTextField>
 
 export type ComponentConfigurations = {
-  defaultTextField?: DefaultTextField
+  defaultTextField: DefaultTextField
 }
 
+type PartialComponentConfiguration = Partial<{
+  defaultTextField: PartialDefaultTextField
+}>
+
 type ReactFullAutoFormInstanceConstructor = {
-  componentConfigurations?: ComponentConfigurations
+  componentConfigurations?: PartialComponentConfiguration
 }
 
 export class ReactFullAutoFormInstance {
