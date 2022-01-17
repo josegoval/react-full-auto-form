@@ -18,6 +18,8 @@ import {
 } from '../../core/types/propTypes/reactFullAutoForm'
 import { HttpMethod } from '../../core/types/shared/http'
 import useReactFullAutoForm from './hooks/useReactFullAutoForm'
+import { ReactFullAutoFormInstance } from '../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
+import { globalReactFullAutoFormInstance } from '../../core/instances/ReactFullAutoFormInstance'
 
 type ReactFullAutoFormProps = {
   fields: Fields
@@ -39,12 +41,13 @@ type ReactFullAutoFormProps = {
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
   axios?: Axios // customAxios
+  instance?: ReactFullAutoFormInstance
 }
 
 export default function ReactFullAutoForm(
   props: ReactFullAutoFormProps
 ): ReactElement {
-  const { fields } = props
+  const { fields, instance = globalReactFullAutoFormInstance } = props
 
   const {
     formState,
@@ -58,6 +61,7 @@ export default function ReactFullAutoForm(
     <form>
       <FormFields
         fields={fields}
+        instance={instance}
         formState={formState}
         onChangeFormState={handleChangeFormState}
       />

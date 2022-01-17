@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react'
+import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../../core/types/propTypes/fields'
 import {
   FormState,
@@ -7,12 +8,14 @@ import {
 import TextField from './components/TextField'
 
 type FormFieldsProps = {
+  instance: ReactFullAutoFormInstance
   fields: Fields
   formState: FormState
   onChangeFormState: HandleChangeFormStateFunction
 }
 
 export default function FormFields({
+  instance,
   fields,
   formState,
   onChangeFormState
@@ -25,6 +28,7 @@ export default function FormFields({
             return (
               <TextField
                 {...field}
+                instance={instance}
                 state={formState[field.name]}
                 onChangeFormState={onChangeFormState}
               />

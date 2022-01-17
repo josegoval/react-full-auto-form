@@ -1,24 +1,35 @@
 import React, { ChangeEvent, ReactElement } from 'react'
+import { ReactFullAutoFormInstance } from '../../../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { TextFieldProps } from '../../../../../../core/types/propTypes/fields'
 import {
   FieldState,
+  FormState,
   HandleChangeFormStateFunction
 } from '../../../../../../core/types/propTypes/reactFullAutoForm'
+import { validateTextInput } from '../../../../../../core/validations/textInput'
 import DefaultField from '../shared/DefaultField'
 
 type Props = TextFieldProps & {
+  instance: ReactFullAutoFormInstance
   state: FieldState
   onChangeFormState: HandleChangeFormStateFunction
 }
 
 export default function TextField(props: Props): ReactElement {
-  // TODO: validateTextInput
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onChangeFormState(props.name, {
-      value: e.target.value,
-      error: '',
-      isBlurred: false
-    })
+    const errorMessage = validateTextInput(
+      props.instance,
+      props,
+      e.target.value
+    )
+    props.onChangeFormState(
+      props.name,
+      (prevState: FormState): FieldState => ({
+        value: errorMessage ? prevState[props.name].value : e.target.value,
+        error: errorMessage,
+        isBlurred: false
+      })
+    )
   }
 
   const handleEnableIsBlurred = () =>
