@@ -10,7 +10,14 @@ const App = () => {
       <ExampleComponent text='Create React Library Example 😄' />
       <ReactFullAutoForm
         fields={[
-          { type: 'text', label: 'name', name: 'name', isRequired: false }
+          {
+            type: 'text',
+            label: 'name',
+            name: 'name',
+            isRequired: false,
+            minLength: 2,
+            maxLength: 4
+          }
         ]}
       />
     </>

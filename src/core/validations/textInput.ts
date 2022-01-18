@@ -14,7 +14,7 @@ export const validateTextInput = (
       ? errorMessageAction(minLength, label) || ''
       : errorMessageAction
   }
-  if (maxLength && nextValue.length < +maxLength) {
+  if (maxLength && nextValue.length > +maxLength) {
     const errorMessageAction =
       instance.componentConfigurations.defaultTextField.errorMessages.maxLength
     return typeof errorMessageAction === 'function'
