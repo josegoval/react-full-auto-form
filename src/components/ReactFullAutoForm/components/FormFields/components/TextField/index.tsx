@@ -32,11 +32,13 @@ export default function TextField(props: Props): ReactElement {
     )
   }
 
-  const handleEnableIsBlurred = () =>
+  const handleEnableIsBlurred = () => {
+    if (props.state.isBlurred) return
     props.onChangeFormState(props.name, (prevState) => ({
       ...prevState[props.name],
       isBlurred: true
     }))
+  }
 
   if (props.component) {
     return <props.component {...props} />
