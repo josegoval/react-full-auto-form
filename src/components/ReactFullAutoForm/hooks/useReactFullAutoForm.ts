@@ -1,5 +1,5 @@
 import { Axios } from 'axios'
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Fields } from '../../../core/types/propTypes/fields'
 import { InputType } from '../../../core/types/propTypes/input'
 import {
@@ -69,17 +69,24 @@ UseReactAutoFormParams) => {
     parseFieldsIntoFormState(fields)
   )
 
-  const handleChangeFormState: HandleChangeFormStateFunction = (
-    name,
-    nextFieldState
-  ) =>
-    setFormState((prevState) => ({
-      ...prevState,
-      [name]:
-        typeof nextFieldState === 'function'
-          ? nextFieldState(prevState)
-          : nextFieldState
-    }))
+  useEffect(() => {
+    console.log('change')
+  }, [setFormState])
+  useEffect(() => {
+    console.log('change-form')
+  }, [formState])
+
+  const handleChangeFormState: HandleChangeFormStateFunction = useCallback(
+    (name, nextFieldState) =>
+      setFormState((prevState) => ({
+        ...prevState,
+        [name]:
+          typeof nextFieldState === 'function'
+            ? nextFieldState(prevState)
+            : nextFieldState
+      })),
+    [setFormState]
+  )
 
   // const handleChangeFieldStateBlur = (name: string, isBlurred: boolean) =>
   //   setFormState((prevState) => ({

@@ -1,4 +1,5 @@
 import { Falsy } from '../shared/common'
+import { Field } from './fields'
 
 // TODO: set axios types for responses
 export type OnSubmitFunction = ({
@@ -47,6 +48,7 @@ export type FormState = {
 }
 
 export type HandleChangeFormStateFunction = (
-  name: string,
-  nextFieldState: FieldState | ((prevState: FormState) => FieldState)
+  field: Field,
+  errorMessage: string,
+  nextFieldStateValue: FieldStateValue
 ) => void

@@ -104,7 +104,7 @@ export type UrlFieldProps = CommonFieldProps & {
 // TODO: week type?
 // TODO: radio
 
-export type Fields = Array<
+export type Field =
   | TextFieldProps
   //   | EmailFieldProps
   //   | NumberFieldProps
@@ -113,6 +113,7 @@ export type Fields = Array<
   //   | DateFieldProps
   //   | DatetimeFieldProps
   | PasswordFieldProps
-  //   | TelFieldProps
-  //   | UrlFieldProps
->
+//   | TelFieldProps
+//   | UrlFieldProps
+
+export type Fields = Array<Field>

@@ -17,6 +17,14 @@ const App = () => {
             isRequired: false,
             minLength: 2,
             maxLength: 4
+          },
+          {
+            type: 'text',
+            label: 'key',
+            name: 'key',
+            isRequired: false,
+            minLength: 0,
+            maxLength: 3
           }
         ]}
       />

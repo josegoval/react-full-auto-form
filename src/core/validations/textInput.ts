@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import { ReactFullAutoFormInstance } from '../instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { TextFieldProps } from '../types/propTypes/fields'
 import { validateCommonFieldValidations } from './shared'
@@ -5,7 +6,7 @@ import { validateCommonFieldValidations } from './shared'
 export const validateTextInput = (
   instance: ReactFullAutoFormInstance,
   { label, maxLength, minLength, pattern, validate }: TextFieldProps,
-  nextValue: string
+  { target: { value: nextValue } }: ChangeEvent<HTMLInputElement>
 ): string => {
   if (minLength && nextValue.length < +minLength) {
     const errorMessageAction =
