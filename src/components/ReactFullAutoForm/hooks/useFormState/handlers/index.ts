@@ -1,26 +1,28 @@
 import { ChangeEvent, Dispatch } from 'react'
-import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
-import { Field, Fields } from '../../../../core/types/propTypes/fields'
-import { InputType } from '../../../../core/types/propTypes/input'
+import { ReactFullAutoFormInstance } from '../../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
+import { Field, Fields } from '../../../../../core/types/propTypes/fields'
 import {
   FormState,
-  HandleChangeFormStateFunction
-} from '../../../../core/types/propTypes/reactFullAutoForm'
-import { validateTextInput } from '../../../../core/validations/textInput'
-import { ValidateCallback } from '../../../../core/validations/types'
+  HandleChangeFormStateFunction,
+  Handlers
+} from '../../../../../core/types/propTypes/reactFullAutoForm'
+import { OnChangeCallbacks } from '../../../../../core/validations/types'
+import { getTextInputCallbacks } from './inputCallbacks'
 
 // change to get callbaks (validate and handleChangeFormState)
-function getValidateCallback(
+function getOnChangeCallbacks(
   instance: ReactFullAutoFormInstance,
   field: Field
-): ValidateCallback {
+): OnChangeCallbacks {
   switch (field.type) {
     case 'text':
-      return (e: ChangeEvent<HTMLInputElement>) =>
-        validateTextInput(instance, field, e)
+      return getTextInputCallbacks(instance, field)
 
     default:
-      return () => ''
+      return {
+        validate: () => '',
+        handleChangeFieldStateValue: () => () => ''
+      }
   }
 }
 
@@ -29,7 +31,10 @@ function getHandleChange(
   field: Field,
   handleChangeFormState: HandleChangeFormStateFunction
 ) {
-  const validate = getValidateCallback(instance, field)
+  const { validate, handleChangeFieldStateValue } = getOnChangeCallbacks(
+    instance,
+    field
+  )
 
   return function (e: ChangeEvent<HTMLInputElement>) {
     // TODO: beforeValidate
@@ -39,7 +44,7 @@ function getHandleChange(
       field,
       errorMessage,
       //   callback (strategy selector)
-      errorMessage ? prevState[props.name].value : e.target.value
+      handleChangeFieldStateValue(e, errorMessage, field)
     )
     // TODO: afterChange
   }
@@ -62,18 +67,19 @@ function getHandleBlur(
 }
 
 export function parseFieldsIntoHandlers(
+  instance: ReactFullAutoFormInstance,
   fields: Fields,
   setFormState: Dispatch<React.SetStateAction<FormState>>
-) {
+): Handlers {
   const handleChangeFormState: HandleChangeFormStateFunction = (
     { name },
     errorMessage,
-    nextFieldStateValue
+    handleChangeFieldStateValue
   ) =>
     setFormState((prevState) => ({
       ...prevState,
       [name]: {
-        value: nextFieldStateValue,
+        value: handleChangeFieldStateValue(prevState),
         error: errorMessage,
         isBlurred: false
       }
@@ -83,7 +89,7 @@ export function parseFieldsIntoHandlers(
     (acc, field) => ({
       ...acc,
       [field.name]: {
-        handleChange: getHandleChange(field, handleChangeFormState),
+        handleChange: getHandleChange(instance, field, handleChangeFormState),
         handleBlur: getHandleBlur(field.name, setFormState)
       }
     }),

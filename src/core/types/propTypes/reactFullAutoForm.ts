@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react'
 import { Falsy } from '../shared/common'
 import { Field } from './fields'
 
@@ -47,8 +48,19 @@ export type FormState = {
   [name: string]: FieldState
 }
 
+export type HandleChangeFieldStateValueFunction = (
+  prevState: FormState
+) => FieldStateValue
+
 export type HandleChangeFormStateFunction = (
   field: Field,
   errorMessage: string,
-  nextFieldStateValue: FieldStateValue
+  handleChangeFieldStateValue: HandleChangeFieldStateValueFunction
 ) => void
+
+export type Handlers = {
+  [name: string]: {
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+    handleBlur: () => void
+  }
+}

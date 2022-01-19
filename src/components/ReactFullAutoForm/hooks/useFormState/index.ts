@@ -1,10 +1,9 @@
-import { Dispatch, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../../core/types/propTypes/fields'
 import { InputType } from '../../../../core/types/propTypes/input'
-import {
-  FormState,
-  HandleChangeFormStateFunction
-} from '../../../../core/types/propTypes/reactFullAutoForm'
+import { FormState } from '../../../../core/types/propTypes/reactFullAutoForm'
+import { parseFieldsIntoHandlers } from './handlers'
 
 const getTypeDefaultValue = (type: InputType) => {
   if (type === 'text' || type === 'password') {
@@ -24,17 +23,20 @@ const parseFieldsIntoFormState = (fields: Fields): FormState =>
 
 type UseFormStateParams = {
   fields: Fields
+  instance: ReactFullAutoFormInstance
 }
 
-const useFormState = ({ fields }: UseFormStateParams) => {
+const useFormState = ({ fields, instance }: UseFormStateParams) => {
   const [formState, setFormState] = useState<FormState>(
     parseFieldsIntoFormState(fields)
   )
 
-  // TODO: complete handlers
-  const handlers = parseFieldsIntoHandlers(fields, formState)
-  // returns ({[key]: {handleChangeState,handleChangeBlur}})
-  return { formState, setFormState }
+  const handlers = useMemo(
+    () => parseFieldsIntoHandlers(instance, fields, setFormState),
+    [instance, fields, setFormState]
+  )
+
+  return { formState, setFormState, handlers }
 }
 
 export default useFormState
