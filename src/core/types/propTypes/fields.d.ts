@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentClass, CSSProperties, FC } from 'react'
+import { ChangeEvent, CSSProperties, FC } from 'react'
 
 type CallbackHookFunction = ({
   nextValue,
