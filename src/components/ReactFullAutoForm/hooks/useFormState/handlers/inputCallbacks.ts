@@ -1,9 +1,6 @@
 import { ChangeEvent } from 'react'
 import { ReactFullAutoFormInstance } from '../../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
-import {
-  Field,
-  TextFieldProps
-} from '../../../../../core/types/propTypes/fields'
+import { TextFieldProps } from '../../../../../core/types/propTypes/fields'
 import { FormState } from '../../../../../core/types/propTypes/reactFullAutoForm'
 import { validateTextInput } from '../../../../../core/validations/textInput'
 import { OnChangeCallbacks } from '../../../../../core/validations/types'

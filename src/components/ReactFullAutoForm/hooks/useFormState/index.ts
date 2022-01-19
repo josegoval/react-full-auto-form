@@ -31,6 +31,7 @@ const useFormState = ({ fields, instance }: UseFormStateParams) => {
     parseFieldsIntoFormState(fields)
   )
 
+  console.log('------> re-render', formState)
   const handlers = useMemo(
     () => parseFieldsIntoHandlers(instance, fields, setFormState),
     [instance, fields, setFormState]

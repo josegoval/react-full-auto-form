@@ -3,7 +3,7 @@ import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullA
 import { Fields } from '../../../../core/types/propTypes/fields'
 import {
   FormState,
-  HandleChangeFormStateFunction
+  Handlers
 } from '../../../../core/types/propTypes/reactFullAutoForm'
 import TextField from './components/TextField'
 
@@ -11,14 +11,14 @@ type FormFieldsProps = {
   instance: ReactFullAutoFormInstance
   fields: Fields
   formState: FormState
-  onChangeFormState: HandleChangeFormStateFunction
+  handlers: Handlers
 }
 
 export default function FormFields({
   instance,
   fields,
   formState,
-  onChangeFormState
+  handlers
 }: FormFieldsProps): ReactElement {
   return (
     <React.Fragment>
@@ -27,10 +27,11 @@ export default function FormFields({
           case 'text':
             return (
               <TextField
+                key={field.name}
                 {...field}
                 instance={instance}
                 state={formState[field.name]}
-                onChangeFormState={onChangeFormState}
+                fieldHandlers={handlers[field.name]}
               />
             )
 

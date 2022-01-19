@@ -44,18 +44,17 @@ type ReactFullAutoFormProps = {
   instance?: ReactFullAutoFormInstance
 }
 
-export default function ReactFullAutoForm(
-  props: ReactFullAutoFormProps
-): ReactElement {
-  const { fields, instance = globalReactFullAutoFormInstance } = props
-
+export default function ReactFullAutoForm({
+  fields,
+  instance = globalReactFullAutoFormInstance
+}: ReactFullAutoFormProps): ReactElement {
   const {
     formState,
-    handleChangeFormState
+    handlers
     // handleReset,
     // handleCancel,
     // handleSubmit
-  } = useReactFullAutoForm(props)
+  } = useReactFullAutoForm({ fields, instance })
 
   return (
     <form>
@@ -63,7 +62,7 @@ export default function ReactFullAutoForm(
         fields={fields}
         instance={instance}
         formState={formState}
-        onChangeFormState={handleChangeFormState}
+        handlers={handlers}
       />
     </form>
   )

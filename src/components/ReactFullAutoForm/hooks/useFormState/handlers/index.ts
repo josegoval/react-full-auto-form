@@ -71,6 +71,7 @@ export function parseFieldsIntoHandlers(
   fields: Fields,
   setFormState: Dispatch<React.SetStateAction<FormState>>
 ): Handlers {
+  console.log('----> re-build')
   const handleChangeFormState: HandleChangeFormStateFunction = (
     { name },
     errorMessage,

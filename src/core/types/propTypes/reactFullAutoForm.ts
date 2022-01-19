@@ -58,9 +58,11 @@ export type HandleChangeFormStateFunction = (
   handleChangeFieldStateValue: HandleChangeFieldStateValueFunction
 ) => void
 
+export type FieldHandlers = {
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+  handleBlur: () => void
+}
+
 export type Handlers = {
-  [name: string]: {
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
-    handleBlur: () => void
-  }
+  [name: string]: FieldHandlers
 }
