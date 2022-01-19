@@ -31,34 +31,12 @@ type UseReactAutoFormParams = {
   errorMessages?: ErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
+  // QUESTION (TODO): this might change to AxiosIntance type?
   axios?: Axios // customAxios
 }
 
-const useReactFullAutoForm = (
-  params: // method,
-  // url,
-  // onSubmit,
-  // onCancel,
-  // onReset,
-  // onSuccess,
-  // onError,
-  // successMessages,
-  // formatter,
-  // submitFormat,
-  // axios
-  UseReactAutoFormParams
-) => {
+const useReactFullAutoForm = (params: UseReactAutoFormParams) => {
   const { formState, handlers } = useFormState(params)
-
-  // const handleSubmit: OnSubmitFunction = ({ values, e }) => {
-  //   // TODO
-  // }
-  // const handleCancel: OnCancelFunction = (e) => {
-  //   // TODO
-  // }
-  // const handleReset: OnResetFunction = ({ values, e }) => {
-  //   // TODO
-  // }
 
   return {
     formState,
