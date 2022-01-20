@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../../core/types/propTypes/fields'
 import { InputType } from '../../../../core/types/propTypes/input'
@@ -37,7 +37,11 @@ const useFormState = ({ fields, instance }: UseFormStateParams) => {
     [instance, fields, setFormState]
   )
 
-  return { formState, setFormState, handlers }
+  const resetFormState = useCallback(
+    () => setFormState(parseFieldsIntoFormState(fields)),
+    [fields, setFormState]
+  )
+  return { formState, setFormState, resetFormState, handlers }
 }
 
 export default useFormState

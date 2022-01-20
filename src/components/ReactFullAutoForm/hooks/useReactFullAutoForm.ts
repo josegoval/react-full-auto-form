@@ -15,6 +15,7 @@ import {
   SubmitFormat
 } from '../../../core/types/propTypes/reactFullAutoForm'
 import { HttpMethod } from '../../../core/types/shared/http'
+import useFormActions from './useFormActions'
 import useFormState from './useFormState'
 
 type UseReactAutoFormParams = {
@@ -36,14 +37,19 @@ type UseReactAutoFormParams = {
 }
 
 const useReactFullAutoForm = (params: UseReactAutoFormParams) => {
-  const { formState, handlers } = useFormState(params)
+  const { formState, resetFormState, handlers } = useFormState(params)
+  const { handleSubmit, handleReset, handleCancel } = useFormActions({
+    ...params,
+    formState,
+    resetFormState
+  })
 
   return {
     formState,
-    handlers
-    // handleSubmit,
-    // handleCancel,
-    // handleReset
+    handlers,
+    handleSubmit,
+    handleCancel,
+    handleReset
   }
 }
 

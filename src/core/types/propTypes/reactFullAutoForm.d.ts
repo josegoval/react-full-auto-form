@@ -7,7 +7,7 @@ export type OnSubmitFunction = ({
   values,
   e
 }: {
-  values: any
+  values: FormState
   e: React.FormEvent
 }) => void
 export type OnCancelFunction = (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -15,7 +15,7 @@ export type OnResetFunction = ({
   values,
   e
 }: {
-  values: any
+  values: FormState
   e: React.MouseEvent<HTMLButtonElement>
 }) => void
 

@@ -18,9 +18,9 @@ import {
 import { HttpMethod } from '../../../../core/types/shared/http'
 
 type UseFormActionsParams = {
-  instance: ReactFullAutoFormInstance
   formState: FormState
-  setFormState: Dispatch<React.SetStateAction<FormState>>
+  resetFormState: () => void
+  instance: ReactFullAutoFormInstance
   method?: HttpMethod
   url?: string
   onSubmit?: OnSubmitFunction
@@ -44,8 +44,10 @@ const useFormActions = (params: UseFormActionsParams) => {
     // TODO
   }
 
-  const handleReset: OnResetFunction = ({ values, e }) => {
-    // TODO
+  const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    params.resetFormState()
+    typeof params.onReset === 'function' &&
+      params.onReset({ values: params.formState, e })
   }
 
   return { handleSubmit, handleCancel: params.onCancel, handleReset }
