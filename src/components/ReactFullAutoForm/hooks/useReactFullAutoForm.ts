@@ -1,4 +1,4 @@
-import { Axios } from 'axios'
+import { AxiosInstance } from 'axios'
 import { ReactFullAutoFormInstance } from '../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../core/types/propTypes/fields'
 import {
@@ -32,8 +32,8 @@ type UseReactAutoFormParams = {
   errorMessages?: ErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
-  // QUESTION (TODO): this might change to AxiosIntance type?
-  axios?: Axios // customAxios
+  // QUESTION (TODO): this might change to AxiosInstanceIntance type?
+  axios?: AxiosInstance // customAxiosInstance
 }
 
 const useReactFullAutoForm = (params: UseReactAutoFormParams) => {

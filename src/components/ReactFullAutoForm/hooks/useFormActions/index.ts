@@ -1,6 +1,7 @@
-import { Axios } from 'axios'
-import React, { Dispatch } from 'react'
+import axiosStatic, { AxiosError, AxiosInstance } from 'axios'
+import React from 'react'
 import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
+import { Fields } from '../../../../core/types/propTypes/fields'
 import {
   ErrorMessages,
   SuccessMessages
@@ -16,11 +17,31 @@ import {
   SubmitFormat
 } from '../../../../core/types/propTypes/reactFullAutoForm'
 import { HttpMethod } from '../../../../core/types/shared/http'
+import { set } from 'lodash'
+
+function getSubmitRequestBody(
+  fields: Fields,
+  formState: FormState,
+  submitFormat: SubmitFormat
+) {
+  if (submitFormat === 'multipart/form-data') {
+    // TODO
+    return {}
+  }
+  // JSON submit format
+  const subtmitRequestBody = {}
+  fields.forEach(({ name, submitKey }) => {
+    // TODO: strategy pattern for each input type
+    set(subtmitRequestBody, submitKey || name, formState[name])
+  })
+  return subtmitRequestBody
+}
 
 type UseFormActionsParams = {
   formState: FormState
   resetFormState: () => void
   instance: ReactFullAutoFormInstance
+  fields: Fields
   method?: HttpMethod
   url?: string
   onSubmit?: OnSubmitFunction
@@ -32,25 +53,61 @@ type UseFormActionsParams = {
   errorMessages?: ErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
-  axios?: Axios // customAxios
+  axios?: AxiosInstance // customAxiosInstance
 }
 
-const useFormActions = (params: UseFormActionsParams) => {
-  const handleSubmit = (e: React.FormEvent) => {
-    //   submitKey format
-    // formatter
-    // handleSubmit
-    // axios submit
-    // TODO
+const useFormActions = ({
+  formState,
+  resetFormState,
+  instance,
+  fields,
+  method = 'POST',
+  url,
+  onSubmit,
+  onCancel,
+  onReset,
+  onSuccess,
+  onError,
+  // successMessages,
+  // errorMessages,
+  formatter,
+  submitFormat = 'JSON',
+  axios
+}: UseFormActionsParams) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    if (typeof onSubmit === 'function') {
+      onSubmit(formState, e)
+    }
+
+    let data = getSubmitRequestBody(fields, formState, submitFormat)
+    // QUESTION: formatter previous or ---> after <---?
+    if (typeof formatter === 'function') {
+      data = formatter(data)
+    }
+    // TODO: axios submit
+    const submitAxiosInstance = axios || instance.axios
+    try {
+      const response = await submitAxiosInstance({ method, url, data })
+      onSuccess && onSuccess(response)
+      // TODO: success messages
+      // response.status
+    } catch (error: any | AxiosError) {
+      if (!axiosStatic.isAxiosError(error)) return
+      // WARNING!: non axios error will be ignored. Is this case possible?
+      onError && onError(error.response, error)
+      // TODO: errorMessages
+      error.response?.status
+    }
+
+    // TODO: notifier (success | error)
   }
 
   const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
-    params.resetFormState()
-    typeof params.onReset === 'function' &&
-      params.onReset({ values: params.formState, e })
+    resetFormState()
+    typeof onReset === 'function' && onReset(formState, e)
   }
 
-  return { handleSubmit, handleCancel: params.onCancel, handleReset }
+  return { handleSubmit, handleCancel: onCancel, handleReset }
 }
 
 export default useFormActions

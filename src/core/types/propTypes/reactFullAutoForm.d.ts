@@ -3,21 +3,12 @@ import { Falsy } from '../shared/common'
 import { Field } from './fields'
 
 // TODO: set axios types for responses
-export type OnSubmitFunction = ({
-  values,
-  e
-}: {
-  values: FormState
-  e: React.FormEvent
-}) => void
+export type OnSubmitFunction = (values: FormState, e: React.FormEvent) => void
 export type OnCancelFunction = (e: React.MouseEvent<HTMLButtonElement>) => void
-export type OnResetFunction = ({
-  values,
-  e
-}: {
-  values: FormState
+export type OnResetFunction = (
+  values: FormState,
   e: React.MouseEvent<HTMLButtonElement>
-}) => void
+) => void
 
 export type OnSuccessFunction = (response: any) => void
 export type OnErrorFunction = (response: any, error: Error) => void

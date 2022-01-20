@@ -2,6 +2,7 @@ import { TextFieldComponent } from '../../types/propTypes/components'
 import { Falsy } from '../../types/shared/common'
 import { defaultsDeep } from 'lodash'
 import { defaultComponentConfigurations } from './defaultConstructor'
+import defaultAxiosInstance, { AxiosInstance } from 'axios'
 
 type ClampErrorFunction = (
   requiredLength: number,
@@ -32,18 +33,22 @@ type PartialComponentConfiguration = Partial<{
 
 type ReactFullAutoFormInstanceConstructor = {
   componentConfigurations?: PartialComponentConfiguration
+  axios?: AxiosInstance
 }
 
 export class ReactFullAutoFormInstance {
   private _componentConfigurations: ComponentConfigurations
+  private _axios: AxiosInstance
 
   constructor({
-    componentConfigurations = {}
+    componentConfigurations = {},
+    axios = defaultAxiosInstance
   }: ReactFullAutoFormInstanceConstructor = {}) {
-    this.componentConfigurations = defaultsDeep(
+    this._componentConfigurations = defaultsDeep(
       componentConfigurations,
       defaultComponentConfigurations
     )
+    this._axios = axios
   }
 
   public get componentConfigurations() {
@@ -51,5 +56,11 @@ export class ReactFullAutoFormInstance {
   }
   public set componentConfigurations(value) {
     this._componentConfigurations = value
+  }
+  public get axios(): AxiosInstance {
+    return this._axios
+  }
+  public set axios(value: AxiosInstance) {
+    this._axios = value
   }
 }
