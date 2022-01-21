@@ -3,6 +3,8 @@ import { Falsy } from '../../types/shared/common'
 import { defaultsDeep } from 'lodash'
 import { defaultComponentConfigurations } from './defaultConstructor'
 import defaultAxiosInstance, { AxiosInstance } from 'axios'
+import { NotifierFunction } from './notifier/notifier'
+import { AlertNotifier } from './notifier/alertNotifier'
 
 type ClampErrorFunction = (
   requiredLength: number,
@@ -31,36 +33,42 @@ type PartialComponentConfiguration = Partial<{
   defaultTextField: PartialDefaultTextField
 }>
 
-type ReactFullAutoFormInstanceConstructor = {
+type ReactFullAutoFormInstanceConstructor<NotifierConfigurationType> = {
   componentConfigurations?: PartialComponentConfiguration
   axios?: AxiosInstance
+  notifierFunction?: NotifierFunction<NotifierConfigurationType>
 }
 
-export class ReactFullAutoFormInstance {
+export class ReactFullAutoFormInstance<NotifierConfigurationType = any> {
   private _componentConfigurations: ComponentConfigurations
   private _axios: AxiosInstance
+  private _notifierFunction: NotifierFunction<NotifierConfigurationType>
 
   constructor({
     componentConfigurations = {},
-    axios = defaultAxiosInstance
-  }: ReactFullAutoFormInstanceConstructor = {}) {
+    axios = defaultAxiosInstance,
+    notifierFunction = AlertNotifier
+  }: // defaultSuccessMessages
+  // defaultErrorMessages
+  ReactFullAutoFormInstanceConstructor<NotifierConfigurationType> = {}) {
     this._componentConfigurations = defaultsDeep(
       componentConfigurations,
       defaultComponentConfigurations
     )
     this._axios = axios
+    this._notifierFunction = notifierFunction
+    // TODO: (others field is required for both cases)
+    // defaultSuccessMessages
+    // defaultErrorMessages
   }
 
   public get componentConfigurations() {
     return this._componentConfigurations
   }
-  public set componentConfigurations(value) {
-    this._componentConfigurations = value
-  }
   public get axios(): AxiosInstance {
     return this._axios
   }
-  public set axios(value: AxiosInstance) {
-    this._axios = value
+  public get notify(): NotifierFunction<NotifierConfigurationType> {
+    return this._notifierFunction
   }
 }
