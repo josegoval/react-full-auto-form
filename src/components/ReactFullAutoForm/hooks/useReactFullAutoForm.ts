@@ -2,8 +2,8 @@ import { AxiosInstance } from 'axios'
 import { ReactFullAutoFormInstance } from '../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../core/types/propTypes/fields'
 import {
-  ErrorMessages,
-  SuccessMessages
+  PartialErrorMessages,
+  PartialSuccessMessages
 } from '../../../core/types/propTypes/messages'
 import {
   FormatterFunction,
@@ -28,12 +28,11 @@ type UseReactAutoFormParams = {
   onReset?: OnResetFunction
   onSuccess?: OnSuccessFunction
   onError?: OnErrorFunction
-  successMessages?: SuccessMessages
-  errorMessages?: ErrorMessages
+  successMessages?: PartialSuccessMessages
+  errorMessages?: PartialErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
-  // QUESTION (TODO): this might change to AxiosInstanceIntance type?
-  axios?: AxiosInstance // customAxiosInstance
+  axios?: AxiosInstance
 }
 
 const useReactFullAutoForm = (params: UseReactAutoFormParams) => {

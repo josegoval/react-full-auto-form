@@ -37,7 +37,6 @@ export default function FormFields({
 
           default:
             return null
-            break
         }
       })}
     </React.Fragment>

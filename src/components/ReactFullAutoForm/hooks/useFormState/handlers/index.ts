@@ -43,7 +43,6 @@ function getHandleChange(
     handleChangeFormState(
       field,
       errorMessage,
-      //   callback (strategy selector)
       handleChangeFieldStateValue(e, errorMessage, field)
     )
     // TODO: afterChange
@@ -55,7 +54,7 @@ function getHandleBlur(
   setFormState: Dispatch<React.SetStateAction<FormState>>
 ) {
   return function () {
-    setFormState((prevState) =>
+    setFormState((prevState: FormState) =>
       prevState[name].isBlurred
         ? prevState
         : {
@@ -77,7 +76,7 @@ export function parseFieldsIntoHandlers(
     errorMessage,
     handleChangeFieldStateValue
   ) =>
-    setFormState((prevState) => ({
+    setFormState((prevState: FormState) => ({
       ...prevState,
       [name]: {
         value: handleChangeFieldStateValue(prevState),

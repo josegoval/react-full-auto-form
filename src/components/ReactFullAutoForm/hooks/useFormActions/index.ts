@@ -3,8 +3,8 @@ import React from 'react'
 import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../../core/types/propTypes/fields'
 import {
-  ErrorMessages,
-  SuccessMessages
+  PartialErrorMessages,
+  PartialSuccessMessages
 } from '../../../../core/types/propTypes/messages'
 import {
   FormatterFunction,
@@ -49,8 +49,8 @@ type UseFormActionsParams = {
   onReset?: OnResetFunction
   onSuccess?: OnSuccessFunction
   onError?: OnErrorFunction
-  successMessages?: SuccessMessages
-  errorMessages?: ErrorMessages
+  successMessages?: PartialSuccessMessages
+  errorMessages?: PartialErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
   axios?: AxiosInstance // customAxiosInstance
@@ -68,14 +68,27 @@ const useFormActions = ({
   onReset,
   onSuccess,
   onError,
-  // successMessages,
-  // errorMessages,
+  successMessages,
+  errorMessages,
   formatter,
   submitFormat = 'JSON',
   axios
 }: UseFormActionsParams) => {
+  const hasFormStateErrors = () => {
+    for (const key in formState) {
+      if (
+        Object.prototype.hasOwnProperty.call(formState, key) &&
+        formState[key].error
+      ) {
+        return true
+      }
+    }
+    return false
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
-    // TODO: check errors before submit!
+    if (hasFormStateErrors()) return
+
     if (typeof onSubmit === 'function') {
       onSubmit(formState, e)
     }
@@ -85,17 +98,16 @@ const useFormActions = ({
     if (typeof formatter === 'function') {
       data = formatter(data)
     }
-    // TODO: axios submit
     const submitAxiosInstance = axios || instance.axios
     try {
       const response = await submitAxiosInstance({ method, url, data })
       onSuccess && onSuccess(response.data, response)
-      instance.notifySuccess(response.status, response)
+      instance.notifySuccess(response.status, response, successMessages)
     } catch (error) {
       if (!axiosStatic.isAxiosError(error)) return
       // WARNING!: non axios error will be ignored. Is this case possible?
       onError && onError(error.response, error)
-      instance.notifyError(error.response?.status || -1, error)
+      instance.notifyError(error.response?.status || -1, error, errorMessages)
     }
   }
 

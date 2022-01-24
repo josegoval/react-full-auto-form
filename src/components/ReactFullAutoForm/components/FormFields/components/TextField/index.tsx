@@ -7,6 +7,7 @@ import {
 } from '../../../../../../core/types/propTypes/reactFullAutoForm'
 import DefaultField from '../shared/DefaultField'
 
+// TODO: abstractFieldProps<T> = T & {...}
 type Props = TextFieldProps & {
   instance: ReactFullAutoFormInstance
   state: FieldState
