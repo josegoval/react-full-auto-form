@@ -1,9 +1,6 @@
 import TextField from '../../../components/ReactFullAutoForm/components/FormFields/components/TextField'
 import { AlertNotifier } from './notifier/alertNotifier'
-import {
-  ComponentConfigurations,
-  NotifierConfiguration
-} from './ReactFullAutoFormInstance'
+import { ComponentConfigurations, Notifier } from './ReactFullAutoFormInstance'
 
 export const defaultComponentConfigurations: Required<ComponentConfigurations> =
   {
@@ -18,7 +15,7 @@ export const defaultComponentConfigurations: Required<ComponentConfigurations> =
     }
   }
 
-export const defaultNotifierConfiguration: NotifierConfiguration<unknown> = {
+export const defaultNotifier: Notifier<unknown> = {
   notify: AlertNotifier,
   defaultErrorMessages: {
     others: {

@@ -3,7 +3,7 @@ import { Falsy } from '../../types/shared/common'
 import { defaultsDeep } from 'lodash'
 import {
   defaultComponentConfigurations,
-  defaultNotifierConfiguration
+  defaultNotifier
 } from './defaultConstructor'
 import defaultAxiosInstance, {
   AxiosError,
@@ -43,13 +43,13 @@ export type ComponentConfigurations = {
 
 type PartialComponentConfiguration = Partial<ComponentConfigurations>
 
-export type NotifierConfiguration<T> = {
+export type Notifier<T> = {
   notify: NotifierFunction<T>
   defaultSuccessMessages: SuccessMessages
   defaultErrorMessages: ErrorMessages
 }
 
-type PartialNotifierConfiguration<T> = {
+type PartialNotifier<T> = {
   notify?: NotifierFunction<T>
   defaultSuccessMessages?: PartialSuccessMessages
   defaultErrorMessages?: PartialErrorMessages
@@ -60,7 +60,7 @@ type ReactFullAutoFormInstanceConstructor<
 > = {
   componentConfigurations?: PartialComponentConfiguration
   axios?: AxiosInstance
-  notifierConfiguration?: PartialNotifierConfiguration<NotifierFunctionConfigurationParamType>
+  notifier?: PartialNotifier<NotifierFunctionConfigurationParamType>
 }
 
 export class ReactFullAutoFormInstance<
@@ -68,12 +68,12 @@ export class ReactFullAutoFormInstance<
 > {
   private _componentConfigurations: ComponentConfigurations
   private _axios: AxiosInstance
-  private _notifierConfiguration: NotifierConfiguration<NotifierFunctionConfigurationParamType>
+  private _notifier: Notifier<NotifierFunctionConfigurationParamType>
 
   constructor({
     componentConfigurations = {},
     axios = defaultAxiosInstance,
-    notifierConfiguration = {}
+    notifier = {}
   }: // defaultSuccessMessages
   // defaultErrorMessages
   ReactFullAutoFormInstanceConstructor<NotifierFunctionConfigurationParamType> = {}) {
@@ -82,10 +82,7 @@ export class ReactFullAutoFormInstance<
       defaultComponentConfigurations
     )
     this._axios = axios
-    this._notifierConfiguration = defaultsDeep(
-      notifierConfiguration,
-      defaultNotifierConfiguration
-    )
+    this._notifier = defaultsDeep(notifier, defaultNotifier)
   }
 
   public get componentConfigurations() {
@@ -102,12 +99,12 @@ export class ReactFullAutoFormInstance<
   ) {
     for (const messages of [
       successMessages,
-      this._notifierConfiguration.defaultSuccessMessages
+      this._notifier.defaultSuccessMessages
     ]) {
       if (typeof messages === 'object') {
         if (Object.prototype.hasOwnProperty(statusCode)) {
           const notifyArgs = messages[statusCode]
-          notifyArgs && this._notifierConfiguration.notify(notifyArgs)
+          notifyArgs && this._notifier.notify(notifyArgs)
           return
         }
         if (Object.prototype.hasOwnProperty('others')) {
@@ -121,7 +118,7 @@ export class ReactFullAutoFormInstance<
               : messages.others
           if (!notifyArgs) return
 
-          this._notifierConfiguration.notify(notifyArgs)
+          this._notifier.notify(notifyArgs)
           return
         }
       }
@@ -135,12 +132,12 @@ export class ReactFullAutoFormInstance<
   ) {
     for (const messages of [
       errorMessages,
-      this._notifierConfiguration.defaultErrorMessages
+      this._notifier.defaultErrorMessages
     ]) {
       if (typeof messages === 'object') {
         if (Object.prototype.hasOwnProperty(statusCode)) {
           const notifyArgs = messages[statusCode]
-          notifyArgs && this._notifierConfiguration.notify(notifyArgs)
+          notifyArgs && this._notifier.notify(notifyArgs)
           return
         }
         if (Object.prototype.hasOwnProperty('others')) {
@@ -154,7 +151,7 @@ export class ReactFullAutoFormInstance<
               : messages.others
           if (!notifyArgs) return
 
-          this._notifierConfiguration.notify(notifyArgs)
+          this._notifier.notify(notifyArgs)
           return
         }
       }

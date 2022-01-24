@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react'
+import { AxiosError, AxiosResponse } from 'axios'
 import { Falsy } from '../shared/common'
 import { Field } from './fields'
 
@@ -10,8 +11,11 @@ export type OnResetFunction = (
   e: React.MouseEvent<HTMLButtonElement>
 ) => void
 
-export type OnSuccessFunction = (response: any) => void
-export type OnErrorFunction = (response: any, error: Error) => void
+export type OnSuccessFunction = (
+  response: any,
+  axiosResponse: AxiosResponse
+) => void
+export type OnErrorFunction = (response: any, axiosError: AxiosError) => void
 
 export type ButtonConfiguration = {
   text: string

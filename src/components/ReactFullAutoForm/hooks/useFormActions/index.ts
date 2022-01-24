@@ -89,20 +89,14 @@ const useFormActions = ({
     const submitAxiosInstance = axios || instance.axios
     try {
       const response = await submitAxiosInstance({ method, url, data })
-      onSuccess && onSuccess(response)
-      // TODO: success messages
-      // ... priority: params[status] -> params[others] -> instance.default*[status] -> instance.default*[others]
-      // response.status
+      onSuccess && onSuccess(response.data, response)
+      instance.notifySuccess(response.status, response)
     } catch (error) {
       if (!axiosStatic.isAxiosError(error)) return
       // WARNING!: non axios error will be ignored. Is this case possible?
       onError && onError(error.response, error)
-      // TODO: errorMessages
-      // ... priority: params[status] -> params[others] -> instance.default*[status] -> instance.default*[others]
-      error.response?.status
+      instance.notifyError(error.response?.status || -1, error)
     }
-
-    // TODO: notifier (success | error)
   }
 
   const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
