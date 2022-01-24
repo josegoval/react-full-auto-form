@@ -1,4 +1,4 @@
-import axiosStatic, { AxiosError, AxiosInstance } from 'axios'
+import axiosStatic, { AxiosInstance } from 'axios'
 import React from 'react'
 import { ReactFullAutoFormInstance } from '../../../../core/instances/ReactFullAutoFormInstance/ReactFullAutoFormInstance'
 import { Fields } from '../../../../core/types/propTypes/fields'
@@ -75,6 +75,7 @@ const useFormActions = ({
   axios
 }: UseFormActionsParams) => {
   const handleSubmit = async (e: React.FormEvent) => {
+    // TODO: check errors before submit!
     if (typeof onSubmit === 'function') {
       onSubmit(formState, e)
     }
@@ -92,7 +93,7 @@ const useFormActions = ({
       // TODO: success messages
       // ... priority: params[status] -> params[others] -> instance.default*[status] -> instance.default*[others]
       // response.status
-    } catch (error: any | AxiosError) {
+    } catch (error) {
       if (!axiosStatic.isAxiosError(error)) return
       // WARNING!: non axios error will be ignored. Is this case possible?
       onError && onError(error.response, error)

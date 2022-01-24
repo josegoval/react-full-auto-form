@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react'
 import { Fields } from '../../core/types/propTypes/fields'
 import {
-  ErrorMessages,
-  SuccessMessages
+  PartialErrorMessages,
+  PartialSuccessMessages
 } from '../../core/types/propTypes/messages'
 import { AxiosInstance } from 'axios'
 import FormFields from './components/FormFields'
@@ -36,8 +36,8 @@ type ReactFullAutoFormProps = {
   submitButton?: ButtonOptions
   cancelButton?: ButtonOptions
   resetButton?: ButtonOptions
-  successMessages?: SuccessMessages
-  errorMessages?: ErrorMessages
+  successMessages?: PartialSuccessMessages
+  errorMessages?: PartialErrorMessages
   formatter?: FormatterFunction
   submitFormat?: SubmitFormat
   axios?: AxiosInstance // customAxiosInstance

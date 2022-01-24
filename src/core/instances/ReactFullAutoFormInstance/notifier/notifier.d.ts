@@ -1,12 +1,10 @@
 type NotifierType = 'success' | 'error' | 'warning'
-type NotifierTitle = 'string'
-type NotifierDescription = 'string'
 type NotifierConfigurations<T> = T
 
-type NotifierFunctionParams<T> = {
-  type: NotifierType
-  title: NotifierTitle
-  description?: NotifierDescription
+export type NotifierFunctionParams<T> = {
+  type?: NotifierType
+  title: string
+  description?: string
   configurations?: NotifierConfigurations<T>
 }
 
